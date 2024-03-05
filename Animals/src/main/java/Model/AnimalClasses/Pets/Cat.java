@@ -1,4 +1,10 @@
 package Model.AnimalClasses.Pets;
 
-public class Cat extends Pet{
+/**
+ * Класс Cat, наследует {@link Pet}.
+ *
+ * @author Бугаков Данил
+ * @version 1.0
+ */
+public class Cat extends Pet {
 }

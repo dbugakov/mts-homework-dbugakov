@@ -1,4 +1,10 @@
 package Model.AnimalClasses.Predators;
 
-public class Wolf extends Predator{
+/**
+ * Класс Wolf, наследует {@link Predator}.
+ *
+ * @author Бугаков Данил
+ * @version 1.0
+ */
+public class Wolf extends Predator {
 }

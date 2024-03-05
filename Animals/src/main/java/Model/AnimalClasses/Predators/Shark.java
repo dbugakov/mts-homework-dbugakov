@@ -1,4 +1,10 @@
 package Model.AnimalClasses.Predators;
 
-public class Shark extends Predator{
+/**
+ * Класс Shark, наследует {@link Predator}.
+ *
+ * @author Бугаков Данил
+ * @version 1.0
+ */
+public class Shark extends Predator {
 }
