@@ -6,6 +6,7 @@ import Model.AnimalClasses.Predators.Shark;
 import Model.AnimalClasses.Predators.Wolf;
 import Model.Interface.Animal;
 
+import java.time.LocalDate;
 import java.util.Random;
 
 /**
@@ -36,6 +37,23 @@ public abstract class AbstractAnimal implements Animal {
      */
     protected String character;
 
+    /**
+     * Поле день рождения животного, в формате dd-MM-yyyy
+     */
+    protected LocalDate birthDate;
+
+    public AbstractAnimal(String breed, String name, Double cost, String character, LocalDate birthDate) {
+        this.breed = breed;
+        this.name = name;
+        this.cost = cost;
+        this.character = character;
+        this.birthDate = birthDate;
+
+    }
+
+    public AbstractAnimal() {
+
+    }
 
     /**
      * Функция получения значения поля {@link AbstractAnimal#breed}.
@@ -78,6 +96,11 @@ public abstract class AbstractAnimal implements Animal {
     @Override
     public String getCharacter() {
         return character;
+    }
+
+    @Override
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
     /**
