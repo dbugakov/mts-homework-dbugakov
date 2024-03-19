@@ -1,4 +1,4 @@
-package Service.Exception;
+package Exception;
 
 /**
  * InvalidAnimalBirthDateException, наследует {@link Exception}.

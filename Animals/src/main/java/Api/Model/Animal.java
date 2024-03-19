@@ -1,4 +1,4 @@
-package Model.Interface;
+package Api.Model;
 
 import Model.Asbtract.AbstractAnimal;
 
@@ -7,7 +7,7 @@ import java.time.LocalDate;
 /**
  * Animal, реализован в {@link AbstractAnimal}.
  */
-public interface Animal {
+public interface Animal extends Comparable<Animal> {
 
     /**
      * Функция получения строки.

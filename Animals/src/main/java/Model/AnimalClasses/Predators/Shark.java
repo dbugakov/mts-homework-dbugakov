@@ -15,4 +15,8 @@ public class Shark extends Predator {
 
     public Shark() {
     }
+
+    public Shark(String name) {
+        this.name = name;
+    }
 }
