@@ -28,9 +28,9 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      * Перегружен из метода {@link CreateAnimalServiceImpl#createAnimals}.
      * Ничего не возвращает, выводит результат на экран
      */
-    public void createAnimals(int AnimalCount) {
+    public void createAnimals(int animalCount) {
         System.out.println("createAnimals - for");
-        for (int i = 0; i < AnimalCount; i++) {
+        for (int i = 0; i < animalCount; i++) {
             AbstractAnimal.getRandomAnimal();
         }
     }

@@ -2,6 +2,8 @@ package Model.Interface;
 
 import Model.Asbtract.AbstractAnimal;
 
+import java.time.LocalDate;
+
 /**
  * Animal, реализован в {@link AbstractAnimal}.
  */
@@ -35,4 +37,10 @@ public interface Animal {
      */
     public String getCharacter();
 
+    /**
+     * Функция получения значения типа LocalDate.
+     *
+     * @return возвращает LocalDate
+     */
+    public LocalDate getBirthDate();
 }
