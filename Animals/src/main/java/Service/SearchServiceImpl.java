@@ -1,9 +1,9 @@
 package Service;
 
-import Model.Interface.Animal;
-import Service.Exception.InvalidAnimalBirthDateException;
-import Service.Exception.InvalidAnimalException;
-import Service.Interface.SearchService;
+import Api.Model.Animal;
+import Api.Service.SearchService;
+import Exception.InvalidAnimalBirthDateException;
+import Exception.InvalidAnimalException;
 
 import java.time.LocalDate;
 
@@ -11,9 +11,15 @@ import java.time.LocalDate;
  * Класс SearchServiceImpl, реализует {@link SearchService}.
  */
 public class SearchServiceImpl implements SearchService {
+
+    /**
+     * Функция checkLeapYearAnimal
+     * @return Является ли год рождения животного високосный
+     */
     @Override
-    public String checkLeapYearAnimal(Animal animal) throws InvalidAnimalBirthDateException {
+    public boolean checkLeapYearAnimal(Animal animal) throws InvalidAnimalBirthDateException {
         String outputMessage;
+        boolean result;
         if (animal != null) {
             LocalDate animalBirthDate = animal.getBirthDate();
             if (animalBirthDate != null) {
@@ -21,13 +27,15 @@ public class SearchServiceImpl implements SearchService {
 
                 if (animalBirthDate.isLeapYear()) {
                     outputMessage += " был рожден в високосный год";
+                    result = true;
                 } else {
                     outputMessage += " не был рожден в високосный год";
+                    result = false;
                 }
                 System.out.println(outputMessage);
             } else
                 throw new InvalidAnimalBirthDateException("У животного " + animal.getBreed() + " не указана дата его рождения!");
         } else throw new InvalidAnimalException("На вход пришло некорректный объект животного! " + LocalDate.now());
-        return outputMessage;
+        return result;
     }
 }

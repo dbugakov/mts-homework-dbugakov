@@ -1,12 +1,13 @@
 package Model.Asbtract;
 
+import Api.Model.Animal;
 import Model.AnimalClasses.Pets.Cat;
 import Model.AnimalClasses.Pets.Dog;
 import Model.AnimalClasses.Predators.Shark;
 import Model.AnimalClasses.Predators.Wolf;
-import Model.Interface.Animal;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -58,7 +59,6 @@ public abstract class AbstractAnimal implements Animal {
     /**
      * Функция получения значения поля {@link AbstractAnimal#breed}.
      * Переопределён из {@link Animal}
-     *
      * @return возвращает название породы
      */
     @Override
@@ -69,7 +69,6 @@ public abstract class AbstractAnimal implements Animal {
     /**
      * Функция получения значения поля {@link AbstractAnimal#name}.
      * Переопределён из {@link Animal}
-     *
      * @return возвращает название
      */
     @Override
@@ -80,7 +79,6 @@ public abstract class AbstractAnimal implements Animal {
     /**
      * Функция получения значения поля {@link AbstractAnimal#cost}.
      * Переопределён из {@link Animal}
-     *
      * @return возвращает цену
      */
     @Override
@@ -90,7 +88,6 @@ public abstract class AbstractAnimal implements Animal {
 
     /**
      * Функция получения значения поля {@link AbstractAnimal#character}
-     *
      * @return возвращает характер
      */
     @Override
@@ -107,22 +104,25 @@ public abstract class AbstractAnimal implements Animal {
      * Функция получения рандомного животного.
      * Ничего не возвращает, печатает результат на экран
      */
-    public static void getRandomAnimal() {
+    public static Animal getRandomAnimal() {
         Random random = new Random();
+        Animal animal = null;
         switch (random.nextInt(4)) {
             case 0:
-                System.out.println(new Cat());
+                animal = new Cat();
                 break;
             case 1:
-                System.out.println(new Dog());
+                animal = new Dog();
                 break;
             case 2:
-                System.out.println(new Shark());
+                animal = new Shark();
                 break;
             case 3:
-                System.out.println(new Wolf());
+                animal = new Wolf();
                 break;
         }
+        System.out.println(animal);
+        return animal;
     }
 
     /**
@@ -133,5 +133,32 @@ public abstract class AbstractAnimal implements Animal {
         return "AbstractAnimal{" +
                 "class='" + getClass().getSimpleName() + '\'' +
                 '}';
+    }
+
+    /**
+     * Реализация функции compareTo {@link Comparable}.
+     */
+    @Override
+    public int compareTo(Animal o) {
+        return getBirthDate().compareTo(o.getBirthDate());
+    }
+
+    /**
+     * Переопределение функции equals из {@link Object}.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractAnimal that = (AbstractAnimal) o;
+        return Objects.equals(name, that.name);
+    }
+
+    /**
+     * Переопределение функции hashCode из {@link Object}.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(breed, name, cost, character, birthDate);
     }
 }

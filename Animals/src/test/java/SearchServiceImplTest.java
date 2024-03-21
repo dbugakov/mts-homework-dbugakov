@@ -1,9 +1,9 @@
+import Api.Model.Animal;
+import Exception.InvalidAnimalBirthDateException;
+import Exception.InvalidAnimalException;
 import Model.AnimalClasses.Pets.Cat;
 import Model.AnimalClasses.Pets.Dog;
 import Model.AnimalClasses.Predators.Wolf;
-import Model.Interface.Animal;
-import Service.Exception.InvalidAnimalBirthDateException;
-import Service.Exception.InvalidAnimalException;
 import Service.SearchServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,26 +21,40 @@ class SearchServiceImplTest {
     Wolf wolf = new Wolf("Серый Волк", "Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
     Cat cat = new Cat();
     SearchServiceImpl searchService = new SearchServiceImpl();
+    boolean result;
 
     @DisplayName("Кейс, когда год у животного високостный")
     @Test
-    void checkLeapYearAnimalPositive() throws InvalidAnimalBirthDateException {
-        String result = searchService.checkLeapYearAnimal(dog);
-        assertEquals(result, dog.getName() + " был рожден в високосный год");
+    void checkLeapYearAnimalPositive() {
+
+        try {
+            result = searchService.checkLeapYearAnimal(dog);
+        } catch (InvalidAnimalBirthDateException e) {
+            throw new RuntimeException(e);
+        }
+        assertTrue(result);
     }
 
     @DisplayName("Кейс, когда год у животного не високостный")
     @Test
-    void checkLeapYearAnimalNegative() throws InvalidAnimalBirthDateException {
-        String result = searchService.checkLeapYearAnimal(wolf);
-        assertEquals(result, wolf.getName() + " не был рожден в високосный год");
+    void checkLeapYearAnimalNegative() {
+        try {
+            result = searchService.checkLeapYearAnimal(wolf);
+        } catch (InvalidAnimalBirthDateException e) {
+            throw new RuntimeException(e);
+        }
+        assertFalse(result);
     }
 
     @DisplayName("Кейс, когда в checkLeapYearAnimal передаём null")
     @Test
     void checkLeapYearInvalidAnimalException() {
         assertThrows(InvalidAnimalException.class, () -> {
-            searchService.checkLeapYearAnimal(null);
+            try {
+                searchService.checkLeapYearAnimal(null);
+            } catch (InvalidAnimalBirthDateException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
@@ -48,7 +62,11 @@ class SearchServiceImplTest {
     @Test
     void checkLeapYearInvalidAnimalBirthDateException() {
         assertThrows(InvalidAnimalBirthDateException.class, () -> {
-            searchService.checkLeapYearAnimal(cat);
+            try {
+                searchService.checkLeapYearAnimal(cat);
+            } catch (InvalidAnimalBirthDateException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 

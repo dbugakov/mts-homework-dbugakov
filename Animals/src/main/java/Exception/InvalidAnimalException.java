@@ -1,4 +1,4 @@
-package Service.Exception;
+package Exception;
 
 /**
  * InvalidAnimalException, наследует в {@link RuntimeException}.
