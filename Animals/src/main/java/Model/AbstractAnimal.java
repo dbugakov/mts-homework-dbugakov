@@ -1,10 +1,6 @@
-package Model.Asbtract;
+package Model;
 
 import Api.Model.Animal;
-import Model.AnimalClasses.Pets.Cat;
-import Model.AnimalClasses.Pets.Dog;
-import Model.AnimalClasses.Predators.Shark;
-import Model.AnimalClasses.Predators.Wolf;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -107,7 +103,8 @@ public abstract class AbstractAnimal implements Animal {
     public static Animal getRandomAnimal() {
         Random random = new Random();
         Animal animal = null;
-        switch (random.nextInt(4)) {
+
+         switch (random.nextInt(4)) {
             case 0:
                 animal = new Cat();
                 break;

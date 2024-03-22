@@ -2,7 +2,7 @@ package Service;
 
 import Api.Model.Animal;
 import Api.Service.CreateAnimalService;
-import Model.Asbtract.AbstractAnimal;
+import Model.AbstractAnimal;
 
 import java.util.ArrayList;
 import java.util.HashMap;

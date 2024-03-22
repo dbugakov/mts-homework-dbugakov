@@ -1,6 +1,6 @@
 package Api.Model;
 
-import Model.Asbtract.AbstractAnimal;
+import Model.AbstractAnimal;
 
 import java.time.LocalDate;
 

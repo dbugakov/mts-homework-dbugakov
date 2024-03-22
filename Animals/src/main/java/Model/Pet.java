@@ -1,6 +1,4 @@
-package Model.AnimalClasses.Pets;
-
-import Model.Asbtract.AbstractAnimal;
+package Model;
 
 import java.time.LocalDate;
 
