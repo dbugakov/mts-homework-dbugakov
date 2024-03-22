@@ -20,13 +20,13 @@ public class CreateAnimalServiceImplTest {
         assertFalse(createAnimalService.createAnimals().isEmpty());
     }
 
-    @DisplayName("Кейс, когда год у животного не високостный")
+    @DisplayName("Кейс создания Map циклом do while")
     @Test
     void createAnimalsFor() {
         assertFalse(createAnimalServiceImpl.createAnimals().isEmpty());
     }
 
-    @DisplayName("Кейс, когда год у животного не високостный")
+    @DisplayName("Кейс создания Map циклом for")
     @Test
     void createAnimalsDoWhile() {
         int resultSize = 0;
@@ -34,7 +34,7 @@ public class CreateAnimalServiceImplTest {
         for (List<Animal> list : animalMap.values()) {
             resultSize += list.size();
         }
-        assertEquals(resultSize, 5);
+        assertEquals(5,resultSize);
     }
 
     CreateAnimalService createAnimalService = new CreateAnimalService() {

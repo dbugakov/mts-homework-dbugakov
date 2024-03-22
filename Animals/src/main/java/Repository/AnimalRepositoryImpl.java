@@ -3,7 +3,6 @@ package Repository;
 import Api.Model.Animal;
 import Api.Repository.AnimalRepository;
 import Exception.InvalidAnimalBirthDateException;
-import Model.Asbtract.AbstractAnimal;
 import Service.SearchServiceImpl;
 
 import java.time.LocalDate;

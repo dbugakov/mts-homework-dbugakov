@@ -1,11 +1,12 @@
 import Api.Model.Animal;
 import Api.Service.CreateAnimalService;
 import Exception.InvalidAnimalException;
-import Model.AnimalClasses.Pets.Cat;
-import Model.AnimalClasses.Pets.Dog;
-import Model.AnimalClasses.Predators.Shark;
-import Model.AnimalClasses.Predators.Wolf;
+import Model.Cat;
+import Model.Dog;
+import Model.Shark;
+import Model.Wolf;
 import Repository.AnimalRepositoryImpl;
+import Service.CreateAnimalServiceImpl;
 import Service.SearchServiceImpl;
 
 import java.time.LocalDate;
@@ -27,13 +28,12 @@ public class Main {
         CreateAnimalService createAnimalService = new CreateAnimalService() {
             @Override
             public Map<String, List<Animal>> createAnimals() {
-                CreateAnimalService.super.createAnimals();
-                return null;
+                return CreateAnimalService.super.createAnimals();
             }
         };
-        //createAnimalService.createAnimals();
-        //new CreateAnimalServiceImpl().createAnimals();
-        //new CreateAnimalServiceImpl().createAnimals(5);
+        createAnimalService.createAnimals();
+        new CreateAnimalServiceImpl().createAnimals();
+        new CreateAnimalServiceImpl().createAnimals(5);
 
         try {
             SearchServiceImpl searchService = new SearchServiceImpl();

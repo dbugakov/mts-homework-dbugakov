@@ -1,9 +1,9 @@
 import Api.Model.Animal;
 import Exception.InvalidAnimalBirthDateException;
 import Exception.InvalidAnimalException;
-import Model.AnimalClasses.Pets.Cat;
-import Model.AnimalClasses.Pets.Dog;
-import Model.AnimalClasses.Predators.Wolf;
+import Model.Cat;
+import Model.Dog;
+import Model.Wolf;
 import Service.SearchServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ class SearchServiceImplTest {
     SearchServiceImpl searchService = new SearchServiceImpl();
     boolean result;
 
-    @DisplayName("Кейс, когда год у животного високостный")
+    @DisplayName("Кейс, когда год рождения у животного високостный")
     @Test
     void checkLeapYearAnimalPositive() {
 
@@ -35,7 +35,7 @@ class SearchServiceImplTest {
         assertTrue(result);
     }
 
-    @DisplayName("Кейс, когда год у животного не високостный")
+    @DisplayName("Кейс, когда год рождения у животного не високостный")
     @Test
     void checkLeapYearAnimalNegative() {
         try {

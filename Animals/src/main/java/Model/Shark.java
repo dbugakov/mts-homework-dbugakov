@@ -1,4 +1,4 @@
-package Model.AnimalClasses.Predators;
+package Model;
 
 import java.time.LocalDate;
 
