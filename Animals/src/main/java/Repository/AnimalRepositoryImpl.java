@@ -7,10 +7,12 @@ import Service.SearchServiceImpl;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Класс AnimalRepositoryImpl, реализует {@link AnimalRepository}.
@@ -20,39 +22,41 @@ public class AnimalRepositoryImpl implements AnimalRepository {
     /**
      * Функция получения HashMap с животными, которые родились в високосный год
      * Переопределён из {@link AnimalRepository}
+     * @param animalList список животных
      * @return HashMap, где ключ - название класса + поле name, значение - поле дата рождения
      */
     @Override
-    public Map<String, LocalDate> findLeapYearNames(List<Animal> animalList) throws InvalidAnimalBirthDateException {
+    public Map<String, LocalDate> findLeapYearNames(List<Animal> animalList) {
         SearchServiceImpl searchService = new SearchServiceImpl();
-        Map<String, LocalDate> resultMap = new HashMap<>();
-        for (Animal animal : animalList) {
-            if (searchService.checkLeapYearAnimal(animal)) {
-                resultMap.put(animal.getClass().getSimpleName() + " " + animal.getName(), animal.getBirthDate());
-            }
-        }
-        return resultMap;
+        return animalList.stream()
+                .filter(animal -> {
+                    try {
+                        return searchService.checkLeapYearAnimal(animal);
+                    } catch (InvalidAnimalBirthDateException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toMap(Animal -> Animal.getClass().getSimpleName() + " " + Animal.getName(), Animal::getBirthDate));
     }
 
     /**
      * Функция получения HashMap с животными, которые старше параметра age
      * Если ни одного животного с указанным годом нет, ищет самого старшего
      * Переопределён из {@link AnimalRepository}
+     * @param animalList список животных
+     * @param age целевой возраст
      * @return HashMap, где ключ - экземпляр животного, значение - возраст животного
      */
     @Override
     public Map<Animal, Integer> findOlderAnimal(List<Animal> animalList, int age) {
-        Map<Animal, Integer> resultMap = new HashMap<>();
-        int animalAge;
-        for (Animal animal : animalList) {
-            animalAge = Period.between(animal.getBirthDate(), LocalDate.now()).getYears();
-            if (animalAge > age) {
-                resultMap.put(animal, animalAge);
-            }
-        }
+        Map<Animal, Integer> resultMap = animalList.stream()
+                .filter(Animal -> Period.between(Animal.getBirthDate(), LocalDate.now()).getYears() > age)
+                .collect(Collectors.toMap(Function.identity(), animal -> (int) findAnimalAge(animal)));
         if (resultMap.isEmpty()) {
-            animalList.sort(Comparator.naturalOrder());
-            resultMap.put(animalList.get(0), Period.between(animalList.get(0).getBirthDate(), LocalDate.now()).getYears());
+            resultMap = animalList.stream()
+                    .sorted(Comparator.naturalOrder())
+                    .limit(1)
+                    .collect(Collectors.toMap(Function.identity(), animal -> (int) findAnimalAge(animal)));
         }
         return resultMap;
     }
@@ -60,25 +64,69 @@ public class AnimalRepositoryImpl implements AnimalRepository {
     /**
      * Функция получения HashMap с животными, у которых есть дубликаты
      * Переопределён из {@link AnimalRepository}
-     * @return HashMap, где ключ - название класса, значение - количество найденных дубликатов
+     * @param animalList список животных
+     * @return HashMap, где ключ - название класса, значение - список дубликатов
      */
     @Override
-    public Map<String, Integer> findDuplicate(List<Animal> animalList) {
-        Map<String, Integer> resultMap = new HashMap<>();
-        Map<Animal, Integer> frequencyMap = new HashMap<>();
-        for (Animal animal : animalList) {
-            frequencyMap.put(animal, frequencyMap.getOrDefault(animal, 0) + 1);
-        }
-        for (Animal animal : frequencyMap.keySet()) {
-            if (frequencyMap.get(animal) != 1) {
-                if (resultMap.containsKey(animal.getClass().getSimpleName())) {
-                    var i = resultMap.get(animal.getClass().getSimpleName());
-                    resultMap.put(animal.getClass().getSimpleName(), i + frequencyMap.get(animal));
-                } else {
-                    resultMap.put(animal.getClass().getSimpleName(), frequencyMap.get(animal));
-                }
-            }
-        }
-        return resultMap;
+    public Map<String, List<Animal>> findDuplicate(List<Animal> animalList) {
+        return animalList.stream()
+                .collect(Collectors.groupingBy(Function.identity()))
+                .values().stream()
+                .filter(animals -> animals.size() > 1)
+                .flatMap(Collection::stream)
+                .collect(Collectors.groupingBy(animal -> animal.getClass().getSimpleName()));
+    }
+
+    /**
+     * Функция получения среднего возраста из списка животных.
+     * Ничего не возвращает печатает на экран.
+     * Переопределён из {@link AnimalRepository}
+     * @param animalList список животных
+     */
+    @Override
+    public void findAverageAge(List<Animal> animalList) {
+        System.out.println("Средний возраст животных равен = " + animalList.stream()
+                .mapToDouble(this::findAnimalAge)
+                .average()
+                .orElse(Double.NaN));
+    }
+
+    /**
+     * Функция получения списка с животными, возраст которых >5 лет и стоимость выше средней.
+     * Переопределён из {@link AnimalRepository}
+     * @param animalList список животных
+     * @return List - список имён, отсортированный по дате рождения (по возрастанию)
+     */
+    @Override
+    public List<String> findOldAndExpensive(List<Animal> animalList) {
+        double averageCost = animalList.stream()
+                .mapToDouble(Animal::getCost)
+                .average()
+                .orElse(Double.NaN);
+        return animalList.stream()
+                .filter(Animal -> findAnimalAge(Animal) > 5 && Animal.getCost() > averageCost)
+                .sorted(Comparator.naturalOrder())
+                .map(Animal::getName)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Функция получения списка 3-х животных с самой низкой ценой.
+     * Переопределён из {@link AnimalRepository}
+     * @param animalList список животных
+     * @return List - список имён, отсортированный в обратном алфавитном порядке
+     */
+    @Override
+    public List<String> findMinConstAnimals(List<Animal> animalList) {
+        return animalList.stream()
+                .sorted(Comparator.comparing(Animal::getCost))
+                .limit(3)
+                .map(Animal::getName)
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    private double findAnimalAge(Animal animal) {
+        return Period.between(animal.getBirthDate(), LocalDate.now()).getYears();
     }
 }

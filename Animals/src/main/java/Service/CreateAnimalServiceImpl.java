@@ -19,6 +19,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     /**
      * Функция создания десяти уникальных животных.
      * Переопределён из {@link CreateAnimalService}.
+     *
      * @return HashMap, где ключ - название класса, значение - массив Animal
      */
     @Override
@@ -37,6 +38,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     /**
      * Функция создания уникальных животных в заданном количестве.
      * Перегружен из метода {@link CreateAnimalServiceImpl#createAnimals}.
+     *
      * @return HashMap, где ключ - название класса, значение - массив Animal
      */
     public Map<String, List<Animal>> createAnimals(int animalCount) {
