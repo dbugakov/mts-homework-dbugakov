@@ -3,7 +3,6 @@ package Api.Repository;
 import Api.Model.Animal;
 import Exception.InvalidAnimalBirthDateException;
 import Repository.AnimalRepositoryImpl;
-import Service.SearchServiceImpl;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,5 +16,11 @@ public interface AnimalRepository {
 
     Map<Animal, Integer> findOlderAnimal(List<Animal> animalList, int age);
 
-    Map<String, Integer> findDuplicate(List<Animal> animalList);
+    Map<String, List<Animal>> findDuplicate(List<Animal> animalList);
+
+    double findAverageAge(List<Animal> animalList);
+
+    List<String> findOldAndExpensive(List<Animal> animalList);
+
+    List<String> findMinConstAnimals(List<Animal> animalList);
 }

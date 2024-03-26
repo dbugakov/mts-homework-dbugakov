@@ -6,7 +6,6 @@ import Model.Dog;
 import Model.Shark;
 import Model.Wolf;
 import Repository.AnimalRepositoryImpl;
-import Service.CreateAnimalServiceImpl;
 import Service.SearchServiceImpl;
 
 import java.time.LocalDate;
@@ -31,41 +30,35 @@ public class Main {
                 return CreateAnimalService.super.createAnimals();
             }
         };
-        createAnimalService.createAnimals();
-        new CreateAnimalServiceImpl().createAnimals();
-        new CreateAnimalServiceImpl().createAnimals(5);
 
         try {
             SearchServiceImpl searchService = new SearchServiceImpl();
             AnimalRepositoryImpl animalRepository = new AnimalRepositoryImpl();
-            Dog dog = new Dog("Немецкая овчарка", "Елисей", 999.99, "Не кусает за бочок", LocalDate.of(2016, 10, 6));
-            Wolf wolf = new Wolf("Серый Волк", "Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
-            Cat cat = new Cat("Киса");
-            Cat cat1 = new Cat("Киса");
-            Cat cat2 = new Cat("Багира");
-            Cat cat3 = new Cat("Багира");
-            Cat cat4 = new Cat("Багира");
-            Shark shark = new Shark("Зубастик");
-            Shark shark2 = new Shark("Зубастик");
-            List<Animal> animalList = new ArrayList<>();
-            animalList.add(shark);
-            animalList.add(cat3);
-            animalList.add(cat2);
-            animalList.add(cat1);
-            animalList.add(cat);
-            animalList.add(cat4);
-            animalList.add(shark2);
-            System.out.println(animalRepository.findDuplicate(animalList));
-            //animalList.add(dog);
-            //animalList.add(wolf);
-            //animalList.add(cat);
-            //System.out.println(animalRepository.findOlderAnimal(animalList,6));
-            //System.out.println(animalRepository.findLeapYearNames(animalList));
-            //searchService.checkLeapYearAnimal(dog);
-            //searchService.checkLeapYearAnimal(wolf);
-            //searchService.checkLeapYearAnimal(cat);
+            List<Animal> animalList = getAnimalList();
+            System.out.println(animalRepository.findMinConstAnimals(animalList));
         } catch (Exception e) {
             throw new InvalidAnimalException("Работа метода завершилась ошибкой:" + e);
         }
+    }
+
+    private static List<Animal> getAnimalList() {
+        Cat dog2 = new Cat("Немецкая овчарка", "Улисей", 9999.99, "Не кусает за бочок", LocalDate.of(2011, 1, 6));
+        Dog dog = new Dog("Немецкая овчарка", "Ялисей", 999.99, "Не кусает за бочок", LocalDate.of(2016, 10, 6));
+        Wolf wolf = new Wolf("Серый Волк", "Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
+        Cat dog3 = new Cat("Немецкая овчарка", "Елисей", 777.77, "Не кусает за бочок", LocalDate.of(2011, 1, 6));
+
+        Cat cat = new Cat("Киса");
+        Cat cat1 = new Cat("Киса");
+        Cat cat2 = new Cat("Багира");
+        Cat cat3 = new Cat("Багира");
+        Cat cat4 = new Cat("Багира");
+        Shark shark = new Shark("Зубастик");
+        Shark shark2 = new Shark("Зубастик");
+        List<Animal> animalList = new ArrayList<>();
+        animalList.add(dog);
+        animalList.add(wolf);
+        animalList.add(dog2);
+        animalList.add(dog3);
+        return animalList;
     }
 }

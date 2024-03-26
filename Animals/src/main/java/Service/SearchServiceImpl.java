@@ -14,6 +14,7 @@ public class SearchServiceImpl implements SearchService {
 
     /**
      * Функция checkLeapYearAnimal
+     *
      * @return Является ли год рождения животного високосный
      */
     @Override

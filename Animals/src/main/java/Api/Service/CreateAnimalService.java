@@ -4,7 +4,6 @@ import Api.Model.Animal;
 import Model.AbstractAnimal;
 import Service.CreateAnimalServiceImpl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +22,7 @@ public interface CreateAnimalService {
             if (resultMap.containsKey(animal.getClass().getSimpleName())) {
                 resultMap.get(animal.getClass().getSimpleName()).add(animal);
             } else {
-                resultMap.put(animal.getClass().getSimpleName(), new ArrayList<>()).add(animal);
-                resultMap.get(animal.getClass().getSimpleName()).add(animal);
+                resultMap.put(animal.getClass().getSimpleName(), List.of(animal));
             }
             i++;
         }

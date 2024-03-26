@@ -91,7 +91,7 @@ public class AnimalRepositoryImplTest {
     }
 
     @BeforeEach
-    public void initList(){
+    public void initList() {
         animalList = new ArrayList<>();
     }
 }

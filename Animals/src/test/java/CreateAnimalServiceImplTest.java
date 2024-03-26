@@ -34,7 +34,7 @@ public class CreateAnimalServiceImplTest {
         for (List<Animal> list : animalMap.values()) {
             resultSize += list.size();
         }
-        assertEquals(5,resultSize);
+        assertEquals(5, resultSize);
     }
 
     CreateAnimalService createAnimalService = new CreateAnimalService() {

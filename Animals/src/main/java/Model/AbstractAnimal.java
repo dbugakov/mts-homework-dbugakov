@@ -55,6 +55,7 @@ public abstract class AbstractAnimal implements Animal {
     /**
      * Функция получения значения поля {@link AbstractAnimal#breed}.
      * Переопределён из {@link Animal}
+     *
      * @return возвращает название породы
      */
     @Override
@@ -65,6 +66,7 @@ public abstract class AbstractAnimal implements Animal {
     /**
      * Функция получения значения поля {@link AbstractAnimal#name}.
      * Переопределён из {@link Animal}
+     *
      * @return возвращает название
      */
     @Override
@@ -75,6 +77,7 @@ public abstract class AbstractAnimal implements Animal {
     /**
      * Функция получения значения поля {@link AbstractAnimal#cost}.
      * Переопределён из {@link Animal}
+     *
      * @return возвращает цену
      */
     @Override
@@ -84,6 +87,7 @@ public abstract class AbstractAnimal implements Animal {
 
     /**
      * Функция получения значения поля {@link AbstractAnimal#character}
+     *
      * @return возвращает характер
      */
     @Override
@@ -104,7 +108,7 @@ public abstract class AbstractAnimal implements Animal {
         Random random = new Random();
         Animal animal = null;
 
-         switch (random.nextInt(4)) {
+        switch (random.nextInt(4)) {
             case 0:
                 animal = new Cat();
                 break;
