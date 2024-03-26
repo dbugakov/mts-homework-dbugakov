@@ -22,6 +22,7 @@ public class AnimalRepositoryImpl implements AnimalRepository {
     /**
      * Функция получения HashMap с животными, которые родились в високосный год
      * Переопределён из {@link AnimalRepository}
+     *
      * @param animalList список животных
      * @return HashMap, где ключ - название класса + поле name, значение - поле дата рождения
      */
@@ -36,21 +37,22 @@ public class AnimalRepositoryImpl implements AnimalRepository {
                         throw new RuntimeException(e);
                     }
                 })
-                .collect(Collectors.toMap(Animal -> Animal.getClass().getSimpleName() + " " + Animal.getName(), Animal::getBirthDate));
+                .collect(Collectors.toMap(animal -> animal.getClass().getSimpleName() + " " + animal.getName(), Animal::getBirthDate));
     }
 
     /**
      * Функция получения HashMap с животными, которые старше параметра age
      * Если ни одного животного с указанным годом нет, ищет самого старшего
      * Переопределён из {@link AnimalRepository}
+     *
      * @param animalList список животных
-     * @param age целевой возраст
+     * @param age        целевой возраст
      * @return HashMap, где ключ - экземпляр животного, значение - возраст животного
      */
     @Override
     public Map<Animal, Integer> findOlderAnimal(List<Animal> animalList, int age) {
         Map<Animal, Integer> resultMap = animalList.stream()
-                .filter(Animal -> Period.between(Animal.getBirthDate(), LocalDate.now()).getYears() > age)
+                .filter(animal -> Period.between(animal.getBirthDate(), LocalDate.now()).getYears() > age)
                 .collect(Collectors.toMap(Function.identity(), animal -> (int) findAnimalAge(animal)));
         if (resultMap.isEmpty()) {
             resultMap = animalList.stream()
@@ -64,6 +66,7 @@ public class AnimalRepositoryImpl implements AnimalRepository {
     /**
      * Функция получения HashMap с животными, у которых есть дубликаты
      * Переопределён из {@link AnimalRepository}
+     *
      * @param animalList список животных
      * @return HashMap, где ключ - название класса, значение - список дубликатов
      */
@@ -81,19 +84,23 @@ public class AnimalRepositoryImpl implements AnimalRepository {
      * Функция получения среднего возраста из списка животных.
      * Ничего не возвращает печатает на экран.
      * Переопределён из {@link AnimalRepository}
+     *
      * @param animalList список животных
      */
     @Override
-    public void findAverageAge(List<Animal> animalList) {
-        System.out.println("Средний возраст животных равен = " + animalList.stream()
+    public double findAverageAge(List<Animal> animalList) {
+        double result = animalList.stream()
                 .mapToDouble(this::findAnimalAge)
                 .average()
-                .orElse(Double.NaN));
+                .orElse(Double.NaN);
+        System.out.println("Средний возраст животных равен = " + result);
+        return result;
     }
 
     /**
      * Функция получения списка с животными, возраст которых >5 лет и стоимость выше средней.
      * Переопределён из {@link AnimalRepository}
+     *
      * @param animalList список животных
      * @return List - список имён, отсортированный по дате рождения (по возрастанию)
      */
@@ -104,7 +111,7 @@ public class AnimalRepositoryImpl implements AnimalRepository {
                 .average()
                 .orElse(Double.NaN);
         return animalList.stream()
-                .filter(Animal -> findAnimalAge(Animal) > 5 && Animal.getCost() > averageCost)
+                .filter(animal -> findAnimalAge(animal) > 5 && animal.getCost() > averageCost)
                 .sorted(Comparator.naturalOrder())
                 .map(Animal::getName)
                 .collect(Collectors.toList());
@@ -113,6 +120,7 @@ public class AnimalRepositoryImpl implements AnimalRepository {
     /**
      * Функция получения списка 3-х животных с самой низкой ценой.
      * Переопределён из {@link AnimalRepository}
+     *
      * @param animalList список животных
      * @return List - список имён, отсортированный в обратном алфавитном порядке
      */
