@@ -17,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SearchServiceImplTest {
 
-    Dog dog = new Dog("Немецкая овчарка", "Елисей", 999.99, "Не кусает за бочок", LocalDate.of(2016, 10, 6));
-    Wolf wolf = new Wolf("Серый Волк", "Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
+    Dog dog = new Dog("Елисей", 999.99, "Не кусает за бочок", LocalDate.of(2016, 10, 6));
+    Wolf wolf = new Wolf("Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
     Cat cat = new Cat();
     SearchServiceImpl searchService = new SearchServiceImpl();
     boolean result;
@@ -77,8 +77,8 @@ class SearchServiceImplTest {
     }
 
     static Stream<Animal> argsProviderFactory() {
-        Dog dog = new Dog("Немецкая овчарка", "Елисей", 999.99, "Не кусает за бочок", LocalDate.of(2016, 10, 6));
-        Wolf wolf = new Wolf("Серый Волк", "Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
+        Dog dog = new Dog("Елисей", 999.99, "Не кусает за бочок", LocalDate.of(2016, 10, 6));
+        Wolf wolf = new Wolf("Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
         Cat cat = new Cat();
         return Stream.of(dog, wolf, cat);
     }

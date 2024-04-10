@@ -3,6 +3,7 @@ package Service;
 import Api.Model.Animal;
 import Api.Service.CreateAnimalService;
 import Model.AbstractAnimal;
+import Util.FileUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class CreateAnimalServiceImpl implements CreateAnimalService {
     Map<String, List<Animal>> resultMap;
     Animal animal;
+    String stringForFileFill = "";
 
     /**
      * Функция создания десяти уникальных животных.
@@ -29,6 +31,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
         int i = 0;
         do {
             fillResultMap();
+            fillFile(i + 1);
             i++;
         } while (i < 10);
         System.out.println(resultMap);
@@ -46,7 +49,9 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
         resultMap = new HashMap<>();
         for (int i = 0; i < animalCount; i++) {
             fillResultMap();
+            fillFile(i + 1);
         }
+
         System.out.println(resultMap);
         return resultMap;
     }
@@ -59,5 +64,10 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
             resultMap.put(animal.getClass().getSimpleName(), new ArrayList<>());
             resultMap.get(animal.getClass().getSimpleName()).add(animal);
         }
+    }
+
+    private void fillFile(int cnt) {
+        stringForFileFill += cnt + " " + animal.getBreed() + " " + animal.getName() + " " + animal.getCost() + " " + animal.getBirthDate() + "\n";
+        FileUtil.fileChannelWrite(stringForFileFill, "Animals/src/main/resources/animals/logData.txt");
     }
 }

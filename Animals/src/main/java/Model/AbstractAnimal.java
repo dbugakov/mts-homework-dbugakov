@@ -1,6 +1,7 @@
 package Model;
 
 import Api.Model.Animal;
+import Util.FileUtil;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -17,7 +18,7 @@ public abstract class AbstractAnimal implements Animal {
     /**
      * Поле порода
      */
-    protected String breed;
+    protected String breed = getClass().getSimpleName();
 
     /**
      * Поле имя
@@ -39,13 +40,13 @@ public abstract class AbstractAnimal implements Animal {
      */
     protected LocalDate birthDate;
 
-    public AbstractAnimal(String breed, String name, Double cost, String character, LocalDate birthDate) {
-        this.breed = breed;
+    public String secretInformation = FileUtil.getRandomLineFromFile("Animals/src/main/resources/secretStore/secretInformation.txt");
+
+    public AbstractAnimal(String name, Double cost, String character, LocalDate birthDate) {
         this.name = name;
         this.cost = cost;
         this.character = character;
         this.birthDate = birthDate;
-
     }
 
     public AbstractAnimal() {
@@ -100,6 +101,35 @@ public abstract class AbstractAnimal implements Animal {
         return birthDate;
     }
 
+    @Override
+    public String getSecretInformation() {
+        return secretInformation;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
+
+    public void setCharacter(String character) {
+        this.character = character;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setSecretInformation(String secretInformation) {
+        this.secretInformation = secretInformation;
+    }
+
     /**
      * Функция получения рандомного животного.
      * Ничего не возвращает, печатает результат на экран
@@ -132,7 +162,12 @@ public abstract class AbstractAnimal implements Animal {
     @Override
     public String toString() {
         return "AbstractAnimal{" +
-                "class='" + getClass().getSimpleName() + '\'' +
+                "breed='" + breed + '\'' +
+                ", name='" + name + '\'' +
+                ", cost=" + cost +
+                ", character='" + character + '\'' +
+                ", birthDate=" + birthDate +
+                ", secretInformation='" + secretInformation + '\'' +
                 '}';
     }
 

@@ -4,13 +4,16 @@ import Api.Model.Animal;
 import Api.Repository.AnimalRepository;
 import Exception.InvalidAnimalBirthDateException;
 import Service.SearchServiceImpl;
+import Util.FileUtil;
+import Util.ResultReader;
+import Util.SerializeUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -50,7 +53,7 @@ public class AnimalRepositoryImpl implements AnimalRepository {
      * @return HashMap, где ключ - экземпляр животного, значение - возраст животного
      */
     @Override
-    public Map<Animal, Integer> findOlderAnimal(List<Animal> animalList, int age) {
+    public Map<Animal, Integer> findOlderAnimal(List<Animal> animalList, int age) throws IOException {
         Map<Animal, Integer> resultMap = animalList.stream()
                 .filter(animal -> Period.between(animal.getBirthDate(), LocalDate.now()).getYears() > age)
                 .collect(Collectors.toMap(Function.identity(), animal -> (int) findAnimalAge(animal)));
@@ -60,6 +63,8 @@ public class AnimalRepositoryImpl implements AnimalRepository {
                     .limit(1)
                     .collect(Collectors.toMap(Function.identity(), animal -> (int) findAnimalAge(animal)));
         }
+        FileUtil.fileChannelWrite(this.convertToJson(resultMap.keySet()), "Animals/src/main/resources/results/findOlderAnimals.json");
+        ResultReader.printDeserializeAnimal();
         return resultMap;
     }
 
@@ -137,4 +142,15 @@ public class AnimalRepositoryImpl implements AnimalRepository {
     private double findAnimalAge(Animal animal) {
         return Period.between(animal.getBirthDate(), LocalDate.now()).getYears();
     }
+
+    String convertToJson(Set<Animal> animalList) throws IOException {
+        SerializeUtil serializeUtil = new SerializeUtil();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module =
+                new SimpleModule("SerializerService");
+        module.addSerializer(Animal.class, serializeUtil);
+        mapper.registerModule(module);
+        return mapper.writeValueAsString(animalList);
+    }
 }
+

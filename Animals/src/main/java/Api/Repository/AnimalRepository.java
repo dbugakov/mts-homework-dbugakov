@@ -4,6 +4,7 @@ import Api.Model.Animal;
 import Exception.InvalidAnimalBirthDateException;
 import Repository.AnimalRepositoryImpl;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ import java.util.Map;
 public interface AnimalRepository {
     Map<String, LocalDate> findLeapYearNames(List<Animal> animalList) throws InvalidAnimalBirthDateException;
 
-    Map<Animal, Integer> findOlderAnimal(List<Animal> animalList, int age);
+    Map<Animal, Integer> findOlderAnimal(List<Animal> animalList, int age) throws IOException;
 
     Map<String, List<Animal>> findDuplicate(List<Animal> animalList);
 
