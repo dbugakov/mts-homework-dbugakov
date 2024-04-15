@@ -9,8 +9,8 @@ import java.time.LocalDate;
  * @version 1.0
  */
 public class Dog extends Pet {
-    public Dog(String breed, String name, Double cost, String character, LocalDate birthDate) {
-        super(breed, name, cost, character, birthDate);
+    public Dog(String name, Double cost, String character, LocalDate birthDate) {
+        super(name, cost, character, birthDate);
     }
 
     public Dog() {

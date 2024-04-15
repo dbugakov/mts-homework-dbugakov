@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -23,8 +24,8 @@ public class AnimalRepositoryImplTest {
     @DisplayName("Кейс, когда хотя бы у одного из животных год рождения високостный")
     @Test
     void findLeapYearNamesPositive() throws InvalidAnimalBirthDateException {
-        Dog dog = new Dog("Немецкая овчарка", "Елисей", 999.99, "Не кусает за бочок", LocalDate.of(2016, 10, 6));
-        Wolf wolf = new Wolf("Серый Волк", "Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
+        Dog dog = new Dog( "Елисей", 999.99, "Не кусает за бочок", LocalDate.of(2016, 10, 6));
+        Wolf wolf = new Wolf("Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
         animalList.add(dog);
         animalList.add(wolf);
         assertFalse(animalRepository.findLeapYearNames(animalList).isEmpty());
@@ -33,8 +34,8 @@ public class AnimalRepositoryImplTest {
     @DisplayName("Кейс, когда ни у кого из животных год рождения не високостный")
     @Test
     void findLeapYearNamesNegative() throws InvalidAnimalBirthDateException {
-        Dog dog = new Dog("Немецкая овчарка", "Елисей", 999.99, "Не кусает за бочок", LocalDate.of(2017, 10, 6));
-        Wolf wolf = new Wolf("Серый Волк", "Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
+        Dog dog = new Dog("Елисей", 999.99, "Не кусает за бочок", LocalDate.of(2017, 10, 6));
+        Wolf wolf = new Wolf("Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
         animalList.add(dog);
         animalList.add(wolf);
         assertTrue(animalRepository.findLeapYearNames(animalList).isEmpty());
@@ -42,10 +43,10 @@ public class AnimalRepositoryImplTest {
 
     @DisplayName("Кейс, когда найдены животные старше указанного года")
     @Test
-    void findOlderAnimalPositive() {
-        Dog dog = new Dog("Немецкая овчарка", "Елисей", 999.99, "Не кусает за бочок", LocalDate.of(2016, 10, 6));
-        Wolf grayWolf = new Wolf("Серый Волк", "Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
-        Wolf whiteWolf = new Wolf("Белый Волк", "Шарик", 777.77, "Замыкает стаю", LocalDate.of(2023, 3, 17));
+    void findOlderAnimalPositive() throws IOException {
+        Dog dog = new Dog("Елисей", 999.99, "Не кусает за бочок", LocalDate.of(2016, 10, 6));
+        Wolf grayWolf = new Wolf("Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
+        Wolf whiteWolf = new Wolf("Шарик", 777.77, "Замыкает стаю", LocalDate.of(2023, 3, 17));
         animalList.add(dog);
         animalList.add(grayWolf);
         animalList.add(whiteWolf);
@@ -54,9 +55,9 @@ public class AnimalRepositoryImplTest {
 
     @DisplayName("Кейс, когда найдены животные старше указанного года, выводится самый старший")
     @Test
-    void findOlderAnimalNegative() {
-        Dog dog = new Dog("Немецкая овчарка", "Елисей", 999.99, "Не кусает за бочок", LocalDate.of(2017, 10, 6));
-        Wolf wolf = new Wolf("Серый Волк", "Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
+    void findOlderAnimalNegative() throws IOException {
+        Dog dog = new Dog("Елисей", 999.99, "Не кусает за бочок", LocalDate.of(2017, 10, 6));
+        Wolf wolf = new Wolf("Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
         animalList.add(dog);
         animalList.add(wolf);
         assertEquals(Period.between(dog.getBirthDate(), LocalDate.now()).getYears(), animalRepository.findOlderAnimal(animalList, 10).get(dog));
@@ -83,8 +84,8 @@ public class AnimalRepositoryImplTest {
     @DisplayName("Кейс, когда в списке животных нет дубликатов")
     @Test
     void findDuplicateNegative() {
-        Dog dog = new Dog("Немецкая овчарка", "Елисей", 999.99, "Не кусает за бочок", LocalDate.of(2017, 10, 6));
-        Wolf wolf = new Wolf("Серый Волк", "Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
+        Dog dog = new Dog("Елисей", 999.99, "Не кусает за бочок", LocalDate.of(2017, 10, 6));
+        Wolf wolf = new Wolf("Мухтар", 888.88, "Кусает за бочок", LocalDate.of(2021, 3, 17));
         animalList.add(dog);
         animalList.add(wolf);
         assertTrue(animalRepository.findDuplicate(animalList).isEmpty());

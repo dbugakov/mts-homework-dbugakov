@@ -9,8 +9,8 @@ import java.time.LocalDate;
  * @version 1.0
  */
 public class Predator extends AbstractAnimal {
-    public Predator(String breed, String name, Double cost, String character, LocalDate birthDate) {
-        super(breed, name, cost, character, birthDate);
+    public Predator(String name, Double cost, String character, LocalDate birthDate) {
+        super(name, cost, character, birthDate);
     }
 
     public Predator() {

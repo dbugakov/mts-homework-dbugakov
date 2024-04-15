@@ -9,8 +9,8 @@ import java.time.LocalDate;
  * @version 1.0
  */
 public class Shark extends Predator {
-    public Shark(String breed, String name, Double cost, String character, LocalDate birthDate) {
-        super(breed, name, cost, character, birthDate);
+    public Shark(String name, Double cost, String character, LocalDate birthDate) {
+        super(name, cost, character, birthDate);
     }
 
     public Shark() {
